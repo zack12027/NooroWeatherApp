@@ -27,7 +27,7 @@ struct WeatherView: View {
                 .padding(.vertical, 12)
                 .padding(.leading, 10)
                 .background(Color(.systemGray6))
-                .cornerRadius(12)
+                .cornerRadius(16)
                 .overlay(
                     HStack {
                         Spacer()
@@ -85,6 +85,8 @@ struct WeatherView: View {
         }
         .padding()
         
+        //Testing purpose
+        /*
         Button(action: {
                         viewModel.clearDefaults()
                     }) {
@@ -94,8 +96,10 @@ struct WeatherView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .padding(.top, 16)
+         */
          
     }
+         
 }
 
 struct LocationCard: View {
@@ -106,7 +110,6 @@ struct LocationCard: View {
         HStack {
             // City Info
             VStack(alignment: .leading) {
-                
                 Text(location.name)
                     .font(.custom("Poppins-SemiBold", size: 20))
                     .foregroundColor(.primary)
@@ -121,7 +124,6 @@ struct LocationCard: View {
                         .foregroundColor(.primary)
                         .offset(y:10)
                 }
-                
             }
             .padding()
 
@@ -140,9 +142,9 @@ struct LocationCard: View {
             }
 
         }
-        .padding()
+        .padding(.horizontal)
         .background(Color(#colorLiteral(red: 0.9490196109, green: 0.9490196109, blue: 0.9490196109, alpha: 1)))
-        .cornerRadius(20)
+        .cornerRadius(16)
         .padding(.horizontal)
     }
 }
@@ -150,7 +152,12 @@ struct LocationCard: View {
 
 #Preview {
     WeatherView()
-        .environmentObject(WeatherViewModel())
+        .environmentObject(
+                    WeatherViewModel(
+                        weatherService: WeatherAPIService(),
+                        locationService: UserDefaultsLocationService()
+                    )
+                )
 }
 
 struct WeatherDetailsView: View {
@@ -215,7 +222,7 @@ struct WeatherDetailsView: View {
                 
             }
             .background(Color(#colorLiteral(red: 0.9490196109, green: 0.9490196109, blue: 0.9490196109, alpha: 1)))
-            .cornerRadius(15)
+            .cornerRadius(16)
             .padding()
             
         }

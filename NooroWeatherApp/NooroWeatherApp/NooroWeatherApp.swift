@@ -9,11 +9,15 @@ import SwiftUI
 
 @main
 struct NooroWeatherApp: App {
-    @StateObject private var weatherViewModel = WeatherViewModel()
     var body: some Scene {
         WindowGroup {
             WeatherView()
-                .environmentObject(weatherViewModel)
+                .environmentObject(
+                    WeatherViewModel(
+                        weatherService: WeatherAPIService(),
+                        locationService: UserDefaultsLocationService()
+                    )
+                )
         }
     }
 }
