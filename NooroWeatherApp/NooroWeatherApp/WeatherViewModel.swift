@@ -124,7 +124,7 @@ class WeatherViewModel: ObservableObject {
         selectedWeather = nil
     }
     // for testing
-    /*
+    
     func clearDefaults() {
            // Clear saved location
            UserDefaults.standard.removeObject(forKey: userDefaultsKey)
@@ -133,7 +133,7 @@ class WeatherViewModel: ObservableObject {
            resetSearch()
            searchText = ""
        }
-     */
+     
 }
 
 

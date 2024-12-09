@@ -13,6 +13,7 @@ struct WeatherView: View {
     var body: some View {
         VStack {
             // Search Bar
+            
             HStack {
                 TextField("Search Location", text: Binding(
                     get: { viewModel.searchText },
@@ -23,10 +24,10 @@ struct WeatherView: View {
                         }
                     }
                 ))
-                .padding(.vertical, 8)
+                .padding(.vertical, 12)
                 .padding(.leading, 10)
                 .background(Color(.systemGray6))
-                .cornerRadius(10)
+                .cornerRadius(12)
                 .overlay(
                     HStack {
                         Spacer()
@@ -48,12 +49,10 @@ struct WeatherView: View {
             } else if viewModel.searchResults.isEmpty && viewModel.searchText.isEmpty {
                 // Empty State
                 Text("No City Selected")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                    .font(.custom("Poppins-SemiBold", size: 30))
                 
                 Text("Please Search for a city")
-                    .font(.title3)
-                    .fontWeight(.bold)
+                    .font(.custom("Poppins-SemiBold", size: 15))
                     .padding()
                 
                 Spacer()
@@ -86,8 +85,6 @@ struct WeatherView: View {
         }
         .padding()
         
-        // for testing
-        /*
         Button(action: {
                         viewModel.clearDefaults()
                     }) {
@@ -97,7 +94,7 @@ struct WeatherView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .padding(.top, 16)
-         */
+         
     }
 }
 
@@ -111,20 +108,18 @@ struct LocationCard: View {
             VStack(alignment: .leading) {
                 
                 Text(location.name)
-                    .font(.headline)
-                    .bold()
+                    .font(.custom("Poppins-SemiBold", size: 20))
                     .foregroundColor(.primary)
                     
                 
-                HStack
+                HStack(alignment: .top, spacing: 0)
                 {
                     Text("\(weather.current.tempF, specifier: "%.0f")")
-                        .font(.title)
-                        .bold()
+                        .font(.custom("Poppins-Medium", size: 60))
                         .foregroundColor(.primary)
                     Text("°")
                         .foregroundColor(.primary)
-                        .baselineOffset(15)
+                        .offset(y:10)
                 }
                 
             }
@@ -169,7 +164,7 @@ struct WeatherDetailsView: View {
                     image
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 123, height: 123)
                 } placeholder: {
                     ProgressView()
                 }
@@ -178,24 +173,22 @@ struct WeatherDetailsView: View {
             HStack
             {
                 Text(weather.location.name)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                    .font(.custom("Poppins-SemiBold", size: 30))
                 Image(systemName: "location.fill")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 21, height: 21)
                 
             }
             // Temperature
             HStack(alignment: .top, spacing: 0){
                 Text("\(weather.current.tempF, specifier: "%.0f")")
-                    .font(.system(size: 60))
-                    .fontWeight(.bold)
+                    .font(.custom("Poppins-Medium", size: 70))
                     .padding(.bottom)
                 
                 Text("°")
                     .foregroundColor(.primary)
-                    .baselineOffset(15)
+                    .offset(y: 10)
             }
            
             
@@ -203,37 +196,45 @@ struct WeatherDetailsView: View {
             {
                 VStack
                 {
-                    Text("Humidity")
-                        .foregroundColor(Color(#colorLiteral(red: 0.7686274648, green: 0.7686274648, blue: 0.7686274648, alpha: 1)))
-                    Text("\(weather.current.humidity)%")
-                        .foregroundColor(Color(#colorLiteral(red: 0.6039215326, green: 0.603921473, blue: 0.603921473, alpha: 1)))
+                    DisplayData(title: "Humidity", value: "\(weather.current.humidity)%")
+                }
+                .padding()
+                
+                Spacer()
+                VStack
+                {
+                    DisplayData(title: "UV", value: String(format: "%.0f", weather.current.uv))
                 }
                 .padding()
                 Spacer()
                 VStack
                 {
-                    Text("UV")
-                        .foregroundColor(Color(#colorLiteral(red: 0.7686274648, green: 0.7686274648, blue: 0.7686274648, alpha: 1)))
-                    Text("\(weather.current.uv, specifier: "%.0f")")
-                        .foregroundColor(Color(#colorLiteral(red: 0.6039215326, green: 0.603921473, blue: 0.603921473, alpha: 1)))
-                }
-                .padding()
-                Spacer()
-                VStack
-                {
-                    Text("Feels Like")
-                        .foregroundColor(Color(#colorLiteral(red: 0.7686274648, green: 0.7686274648, blue: 0.7686274648, alpha: 1)))
-                    Text("\(weather.current.feelslikeF, specifier: "%.0f")°")
-                        .foregroundColor(Color(#colorLiteral(red: 0.6039215326, green: 0.603921473, blue: 0.603921473, alpha: 1)))
+                    DisplayData(title: "Feels Like", value: String(format: "%.0f", weather.current.feelslikeF))
                 }
                 .padding()
                 
             }
             .background(Color(#colorLiteral(red: 0.9490196109, green: 0.9490196109, blue: 0.9490196109, alpha: 1)))
-            .cornerRadius(20)
+            .cornerRadius(15)
+            .padding()
             
         }
         .padding()
+    }
+}
+
+struct DisplayData:View
+{
+    let title:String
+    let value:String
+    var body: some View
+    {
+        Text(title)
+            .font(.custom("Poppins-Medium", size: 12))
+            .foregroundColor(Color(#colorLiteral(red: 0.7686274648, green: 0.7686274648, blue: 0.7686274648, alpha: 1)))
+        Text(value)
+            .font(.custom("Poppins-Medium", size: 15))
+            .foregroundColor(Color(#colorLiteral(red: 0.6039215326, green: 0.603921473, blue: 0.603921473, alpha: 1)))
     }
 }
 
